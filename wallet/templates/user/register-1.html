@@ -1,7 +1,6 @@
 {% extends 'index.html' %}
-
 {% load static %}
-{% block title %} {{Title}} Login {% endblock %}
+{% block title %} {{Title}} Register {% endblock %}
 {% block content %}
 
 <div style="background-color: #ffffff;
@@ -30,15 +29,20 @@
                     </a>
                 </div>
 				<h3 class="text-center pb-5">Welcome <span class="nonne" > To Music Club </span></h3>
-				<p class="login-box-msg ">Please Login to Money Manager</p>
+				<p class="login-box-msg ">Please Register to Money Manager</p>
 
             </div>
         </div>
 
-		<form method="POST">
+		<form method="POST"  id="registerr_form" onsubmit="registerr(); return false;">
 		  <div class="form-group has-feedback">
-		    <label for="exampleInputEmail1">Username</label>
-			<input type="text" name="username" class="form-control rounded" autocomplete="off" id="exampleInputEmail1" placeholder="Enter Email/Username">
+		    <label for="exampleInputusername1">Username</label>
+			<input type="text" name="username" class="form-control rounded" autocomplete="off" id="exampleInputusername1" placeholder="Enter Username">
+			<span class="icon-adj fa fa-user form-control-feedback"></span>
+		  </div>
+		  <div class="form-group has-feedback">
+		    <label for="exampleInputEmail1">Email</label>
+			<input type="text" name="email" class="form-control rounded" autocomplete="off" id="exampleInputEmail1" placeholder="Enter Email">
 			<span class="icon-adj fa fa-envelope form-control-feedback"></span>
 		  </div>
 		  <div class="form-group has-feedback">
@@ -69,17 +73,16 @@
 		  <div class="row">
 			  <div class="col-12"  >
 				  <div class=" text-left float-left">
-					<a href="/register/" class="text-danger"><i class="fa fa-user"></i> Create Account ?</a><br>
-				  </div>
-				 <div class="fog-pwd text-right float-right">
-					<a href="/admin/password-reset/" class="text-danger"><i class="fa fa-lock"></i> Forgot Your
-                    Password ?</a><br>
+					<a href="/" class="text-danger">
+					    <i class="fa fa-user"></i> Have you already account? click here to Login
+				    </a>
+				    <br>
 				  </div>
 			  </div>
 	      </div>
 		  <div class="row">
 			<div class="col-12 text-center">
-			  <button type="submit" class="btn btn-info btn-block margin-top-10">Login</button>
+			  <button type="submit" class="btn btn-info btn-block margin-top-10">create Account</button>
 			</div>
 			<!-- /.col -->
 		  </div>
