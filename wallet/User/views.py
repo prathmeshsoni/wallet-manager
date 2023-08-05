@@ -28,37 +28,39 @@ def register_attempt(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
 
-        # try:
-        if User.objects.filter(username=username).first():
-            a = {'status': True, 'exists': 'existuser'}
+        try:
+            if User.objects.filter(username=username).first():
+                a = {'status': True, 'exists': 'existuser'}
+                return JsonResponse(a)
+
+            if User.objects.filter(email=email).first():
+                a = {'status': True, 'exists': 'existemail'}
+                return JsonResponse(a)
+
+            auth_token = str(uuid.uuid4())
+            send_mail_after_registration(email, username, auth_token)
+            user_obj = User(username=username, email=email)
+            user_obj.set_password(password)
+            user_obj.save()
+
+            profile_obj = Profile.objects.create(user=user_obj, auth_token=auth_token)
+            profile_obj.save()
+
+            a = {'status': True, 'create': 'usercreate', 'u_name': username}
             return JsonResponse(a)
 
-        if User.objects.filter(email=email).first():
-            a = {'status': True, 'exists': 'existemail'}
+        except:
+            a = {'status': False}
             return JsonResponse(a)
 
-        auth_token = str(uuid.uuid4())
-        send_mail_after_registration(email, username, auth_token)
-        user_obj = User(username=username, email=email)
-        user_obj.set_password(password)
-        user_obj.save()
-
-        profile_obj = Profile.objects.create(user=user_obj, auth_token=auth_token)
-        profile_obj.save()
-
-        a = {'status': True, 'create': 'usercreate', 'u_name': username}
-        return JsonResponse(a)
-        # a = {'status': False}
-        # return JsonResponse(a)
-
-    return render(request, 'user/register-1.html')
+    return render(request, 'user/register.html')
 
 
 # Account Activation Mail Send
 def send_mail_after_registration(email, username, token):
     email_template_name = 'user/verifymail.html'
     parameters = {
-        'domain': 'money-manager.monarksoni.com/verify',
+        'domain': 'money-manager.monarksoni.com/user/verify',
         'token': f'{token}',
         'protocol': 'https',
         'username': f'{username}',
