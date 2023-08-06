@@ -1,5 +1,5 @@
 import json
-from twilio.rest import Client
+# from twilio.rest import Client
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
@@ -620,14 +620,15 @@ def convert_date(date_str):
 
 
 def sent_massage(msg):
-    account_sid = 'AC3906f0671f92d822f886ebd6fdf66271'
-    auth_token = '721b9dc48d0809160c16d438db5f1bf9'
-    client = Client(account_sid, auth_token)
-    message = client.messages.create(
-        body=msg,
-        from_='+15734982530',
-        to='+919157379996'
-    )
+    pass
+    # account_sid = 'AC3906f0671f92d822f886ebd6fdf66271'
+    # auth_token = '721b9dc48d0809160c16d438db5f1bf9'
+    # client = Client(account_sid, auth_token)
+    # message = client.messages.create(
+    #     body=msg,
+    #     from_='+15734982530',
+    #     to='+919157379996'
+    # )
 
 
 def account_value(user_obj, a_name):
