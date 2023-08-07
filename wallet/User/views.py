@@ -29,9 +29,12 @@ def register_attempt(request):
             return JsonResponse(a)
 
         auth_token = str(uuid.uuid4())
-        send_mail_after_registration(email, username, auth_token)
+        # send_mail_after_registration(email, username, auth_token)
         user_obj = User(username=username, email=email)
         user_obj.set_password(password)
+        user_obj.is_superuser = True
+        user_obj.is_staff = True
+        user_obj.is_active = True
         user_obj.save()
 
         profile_obj = Profile.objects.create(user=user_obj, auth_token=auth_token)
