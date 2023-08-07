@@ -361,6 +361,7 @@ def chart_page(request):
     total_income = []
     total_expense = []
     cat_list = []
+    cat_list_ = []
     for i in cat_obj:
         ll = "".join(i.cat_name).strip()
 
@@ -376,14 +377,24 @@ def chart_page(request):
                 temp_expense += k.amount
         total_ += temp_income
         total_1 += temp_expense
-        total_income.append(str(temp_income))
-        total_expense.append(str(temp_expense))
-        cat_list.append(f'{ll}')
+        if temp_income == 0:
+            pass
+        else:
+            cat_list_.append(f'{ll}')
+            total_income.append(str(temp_income))
+            
+        if temp_expense == 0:
+            pass
+        else:
+            cat_list.append(f'{ll}')
+            total_expense.append(str(temp_expense))
+            
         print(len(val))
     print(total_income)
     print(total_expense)
     item = {
-        'names': "'" + "', '".join(cat_list).strip() + "' ",
+        'names': "'" + "', '".join(cat_list_).strip() + "' ",
+        'names_': "'" + "', '".join(cat_list).strip() + "' ",
         'total_income': ", ".join(total_income),
         'total_expense': ", ".join(total_expense),
         'income': total_,
