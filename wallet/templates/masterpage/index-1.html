@@ -925,11 +925,11 @@
                         options: options,
                       });
                     }
-
-                    chart_shows_1(
-                      {% autoescape off %}{{names_}}{% endautoescape %},
-                      [{{total_expense}}]
+                    chart_shows(
+                        {% autoescape off %}{{names}}{% endautoescape %},
+                      [{{total_income}}]
                     );
+
                 {% endif %}
 
                 {% if expense %}
@@ -1044,11 +1044,11 @@
                         options: options,
                       });
                     }
-
-                    chart_shows(
-                        {% autoescape off %}{{names}}{% endautoescape %},
-                      [{{total_income}}]
+                    chart_shows_1(
+                      {% autoescape off %}{{names_}}{% endautoescape %},
+                      [{{total_expense}}]
                     );
+
                 {% endif %}
 
             {% endif %}
