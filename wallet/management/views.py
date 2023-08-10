@@ -17,7 +17,7 @@ from rest_framework.decorators import api_view
 from datetime import datetime, timedelta
 from django.http import JsonResponse
 from django.contrib.auth.views import PasswordChangeForm
-from django_user_agents.utils import get_user_agent
+# from django_user_agents.utils import get_user_agent
 
 
 # 404 Page Not Found
@@ -173,7 +173,7 @@ def admin_private(request):
             request.session['private_admin'] = user.username
             request.session['private_id'] = user11.id
             request.session['login_time'] = datetime.now().timestamp()
-            user_details(request)
+            # user_details(request)
             return redirect('/view/')
 
     else:
@@ -185,7 +185,7 @@ def admin_private(request):
 # Private Logout
 def logout_private_admin(request):
     if 'private_admin' in request.session:
-        user_details(request)
+        # user_details(request)
         del request.session['private_admin']
     if 'login_time' in request.session:
         del request.session['login_time']
@@ -201,7 +201,7 @@ def admin_private_view(request):
     import datetime
     user_obj = get_user_obj(request)
     if request.method == 'POST':
-        user_details(request)
+        # user_details(request)
         dat_ = request.POST.get('date-iss')
         try:
             id_1 = request.POST.get('id')
