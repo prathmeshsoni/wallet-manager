@@ -17,7 +17,7 @@ from rest_framework.decorators import api_view
 from datetime import datetime, timedelta
 from django.http import JsonResponse
 from django.contrib.auth.views import PasswordChangeForm
-# from django_user_agents.utils import get_user_agent
+from django_user_agents.utils import get_user_agent
 
 
 # 404 Page Not Found
@@ -109,11 +109,11 @@ def get_date_data(b, check):
             else:
                 categorized_data_1[date] = [entry]
     if check == 0:
-        categorized_data = dict(sorted(categorized_data.items(), key=lambda item: item[0]))
-        categorized_data_1 = dict(sorted(categorized_data_1.items(), key=lambda item: item[0]))
+        categorized_data = dict(sorted(categorized_data.items(), key=lambda item: datetime.strptime(item[0], "%d %B")))
+        categorized_data_1 = dict(sorted(categorized_data_1.items(), key=lambda item: datetime.strptime(item[0], "%d %B")))
     else:
-        categorized_data = dict(sorted(categorized_data.items(), key=lambda item: item[0], reverse=True))
-        categorized_data_1 = dict(sorted(categorized_data_1.items(), key=lambda item: item[0], reverse=True))
+        categorized_data = dict(sorted(categorized_data.items(), key=lambda item: datetime.strptime(item[0], "%d %B"), reverse=True))
+        categorized_data_1 = dict(sorted(categorized_data_1.items(), key=lambda item: datetime.strptime(item[0], "%d %B"), reverse=True))
 
     return categorized_data, categorized_data_1
 
@@ -170,6 +170,13 @@ def admin_private(request):
 
                 messages.success(request, 'Wrong Password.')
                 return redirect('/')
+            if user.username == 'admin':
+                try:
+                    demo = int(request.POST.get('check_1'))
+                except:
+                    demo = ''
+                if demo == 0:
+                    request.session['not_show'] = user.username
             request.session['private_admin'] = user.username
             request.session['private_id'] = user11.id
             request.session['login_time'] = datetime.now().timestamp()
@@ -549,10 +556,16 @@ def category_add(request):
 
         if cat_list:
             for j in cat_list:
-                cat_obj = CategoryModel()
-                cat_obj.cat_name = j['name']
-                cat_obj.user = user_obj
-                cat_obj.save()
+                try:
+                    cat_obj = CategoryModel.objects.get(cat_name=j['name'], user=user_obj)
+                    cc = 0
+                except:
+                    cat_obj = CategoryModel()
+                    cc = 1
+                if cc == 1:
+                    cat_obj.cat_name = j['name']
+                    cat_obj.user = user_obj
+                    cat_obj.save()
 
         try:
             check = CategoryModel.objects.get(id=category_name)
