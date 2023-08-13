@@ -9,8 +9,26 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from management.views import custom_login_required_not
+import smtplib
+from email.message import EmailMessage
+from User.config import *
 
 
+def send_email(request):
+    receiver_email = 'prathmesh.soni51@gmail.com'
+    msg = EmailMessage()
+    msg.set_content(body)
+    msg['Subject'] = subject
+    msg['From'] = sender_email
+    msg['To'] = receiver_email
+    try:
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
+            server.starttls()
+            server.login(sender_email, password)
+            server.send_message(msg)
+    except Exception as e:
+        print(f"Error sending email: {e}")
+    return redirect('/view/')
 # Registration Page for User
 @custom_login_required_not
 def register_attempt(request):
@@ -29,15 +47,12 @@ def register_attempt(request):
             return JsonResponse(a)
 
         auth_token = str(uuid.uuid4())
-        # send_mail_after_registration(email, username, auth_token)
+        send_mail_after_registration(email, username, auth_token)
         user_obj = User(username=username, email=email)
         user_obj.set_password(password)
-        user_obj.is_superuser = True
-        user_obj.is_staff = True
-        user_obj.is_active = True
         user_obj.save()
 
-        profile_obj = Profile.objects.create(user=user_obj, auth_token=auth_token)
+        profile_obj = Profile.objects.create(user=user_obj, auth_token=auth_token, is_verified=True)
         profile_obj.save()
 
         a = {'status': True, 'create': 'usercreate', 'u_name': username}
