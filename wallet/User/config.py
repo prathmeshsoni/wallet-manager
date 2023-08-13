@@ -1,6 +1,11 @@
+receiver_email = f"prathmesh.soni51@gmail.com"
 subject = f"Script Execution:"
 body = f"Your script located in folder has started running."
 smtp_server = 'smtp.gmail.com'
 smtp_port = 587
+# sender_email = 'team.musicclub.com@gmail.com'
+# password = 'xirfhrznftnibwqh'
+# sender_email = 'money.manager@money-manager.monarksoni.com'
+# password = 'LookAtHer'
 sender_email = 'prathmesh.soni112@gmail.com'
 password = 'cobykuwsrpnjbzqw'

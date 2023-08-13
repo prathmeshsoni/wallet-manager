@@ -5,17 +5,19 @@ from django.contrib import messages
 from .models import *
 import uuid
 from django.conf import settings
-from django.core.mail import EmailMessage
+from django.core.mail import send_mail
+# from django.core.mail import EmailMessage
+import smtplib
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from management.views import custom_login_required_not
-import smtplib
-from email.message import EmailMessage
+# from email.message import EmailMessage
 from User.config import *
 
+# receiver_email = 'prathmesh.soni51@gmail.com'
 
-def send_email(request):
-    receiver_email = 'prathmesh.soni51@gmail.com'
+
+def send_email_1(request):
     msg = EmailMessage()
     msg.set_content(body)
     msg['Subject'] = subject
@@ -29,6 +31,57 @@ def send_email(request):
     except Exception as e:
         print(f"Error sending email: {e}")
     return redirect('/view/')
+
+
+def send_email(request):
+    token = ''
+    username = 'admin'
+    subject = 'Registration Complete'
+    email_template_name = 'user/verifymail.html'
+    parameters = {
+        'domain': 'money-manager.monarksoni.com/verify',
+        'token': f'{token}',
+        'protocol': 'https',
+        'username': f'{username}',
+
+    }
+    html_template = render_to_string(email_template_name, parameters)
+
+    try:
+        send_mail(
+            subject=subject,
+            message='',  # Since you're using an HTML template, message can be empty
+            from_email=sender_email,
+            recipient_list=[receiver_email],
+            fail_silently=False,
+            html_message=html_template,
+            auth_user=sender_email,
+            auth_password=password,
+        )
+    except:
+        return redirect('s/')
+    # msg = EmailMessage(
+    #     subject=subject,
+    #     body=html_template,
+    #     from_email=sender_email,
+    #     to=[receiver_email],
+    # )
+    # msg.content_subtype = 'html'
+    # try:
+    #     with smtplib.SMTP(smtp_server, smtp_port) as server:
+    #         server.starttls()
+    #         server.login(sender_email, password)
+    #         server.send_message(msg)
+    #
+    # except Exception as e:
+    #     print(f"Error sending email: {e}")
+    return redirect('/view/')
+
+    # message.content_subtype = 'html'
+    # message.send()
+
+
+
 # Registration Page for User
 @custom_login_required_not
 def register_attempt(request):
