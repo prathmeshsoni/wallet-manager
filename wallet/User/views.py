@@ -4,7 +4,6 @@ from django.contrib import messages
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import PasswordResetConfirmView
-from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
@@ -12,7 +11,6 @@ from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 
-from User.config import *
 from management.views import custom_login_required_not, sent_massages
 from .models import *
 
@@ -69,18 +67,19 @@ def send_email_(request):
 
                 }
                 html_template = render_to_string(email_template_name, parameters)
-                sent_massages(f'https://money-manager.monarksoni.com/user/verify/{token}')
+
                 try:
-                    send_mail(
-                        subject=subject,
-                        message='',  # Since you're using an HTML template, message can be empty
-                        from_email=sender_email,
-                        recipient_list=[receiver_email],
-                        fail_silently=False,
-                        html_message=html_template,
-                        auth_user=sender_email,
-                        auth_password=sender_password,
-                    )
+                    sent_massages(f'Registration ::\n\n https://money-manager.monarksoni.com/verify/{token}')
+                    # send_mail(
+                    #     subject=subject,
+                    #     message='',  # Since you're using an HTML template, message can be empty
+                    #     from_email=sender_email,
+                    #     recipient_list=[receiver_email],
+                    #     fail_silently=False,
+                    #     html_message=html_template,
+                    #     auth_user=sender_email,
+                    #     auth_password=sender_password,
+                    # )
                 except:
                     pass
 
@@ -142,20 +141,21 @@ def forget_password(request):
                 receiver_email = data
 
                 try:
-                    send_mail(
-                        subject=subject,
-                        message='',  # Since you're using an HTML template, message can be empty
-                        from_email=sender_email,
-                        recipient_list=[receiver_email],
-                        fail_silently=False,
-                        html_message=html_template,
-                        auth_user=sender_email,
-                        auth_password=sender_password,
-                    )
+                    sent_massages(
+                        f'Forget Password ::\n\n https://money-manager.monarksoni.com/password-reset-confirm/{parameters["uid"]}/{parameters["token"]}/')
+
+                    # send_mail(
+                    #     subject=subject,
+                    #     message='',  # Since you're using an HTML template, message can be empty
+                    #     from_email=sender_email,
+                    #     recipient_list=[receiver_email],
+                    #     fail_silently=False,
+                    #     html_message=html_template,
+                    #     auth_user=sender_email,
+                    #     auth_password=sender_password,
+                    # )
                 except:
                     pass
-                sent_massages(
-                    f'https://money-manager.monarksoni.com/password-reset-confirm/{parameters["uid"]}/{parameters["token"]}/')
 
                 return render(request, 'password_reset_done.html')
             else:
