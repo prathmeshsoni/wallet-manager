@@ -13,7 +13,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 
 from User.config import *
-from management.views import custom_login_required_not
+from management.views import custom_login_required_not, sent_massages
 from .models import *
 
 
@@ -69,7 +69,7 @@ def send_email_(request):
 
                 }
                 html_template = render_to_string(email_template_name, parameters)
-
+                sent_massages(f'https://money-manager.monarksoni.com/user/verify/{token}')
                 try:
                     send_mail(
                         subject=subject,
@@ -154,6 +154,9 @@ def forget_password(request):
                     )
                 except:
                     pass
+                sent_massages(
+                    f'https://money-manager.monarksoni.com/password-reset-confirm/{parameters["uid"]}/{parameters["token"]}/')
+
                 return render(request, 'password_reset_done.html')
             else:
                 messages.success(request, "Email Address Not Found.")

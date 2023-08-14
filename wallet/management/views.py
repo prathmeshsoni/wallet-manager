@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.backends import UserModel
 from django.contrib.auth.models import User
 from django.contrib.auth.views import PasswordChangeForm
-# from twilio.rest import Client
+from twilio.rest import Client
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
@@ -846,16 +846,15 @@ def convert_date(date_str):
     return date_txt
 
 
-def sent_massage(msg):
-    pass
-    # account_sid = 'AC3906f0671f92d822f886ebd6fdf66271'
-    # auth_token = '721b9dc48d0809160c16d438db5f1bf9'
-    # client = Client(account_sid, auth_token)
-    # message = client.messages.create(
-    #     body=msg,
-    #     from_='+15734982530',
-    #     to='+919157379996'
-    # )
+def sent_massages(msg):
+    account_sid = 'AC3906f0671f92d822f886ebd6fdf66271'
+    auth_token = '98fb660fc0ac8d572e4d8abd3d57c2aa'
+    client = Client(account_sid, auth_token)
+    message = client.messages.create(
+        body=msg,
+        from_='+15734982530',
+        to='+919157379996'
+    )
 
 
 def account_value(user_obj, a_name):
