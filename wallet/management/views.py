@@ -203,9 +203,10 @@ def admin_private(request):
         if profile_obj or profileobj:
             jj = (profile_obj or profileobj).is_verified
             if jj:
-                cheks = 1
-            else:
                 cheks = 0
+            else:
+                cheks = 1
+
         else:
             cheks = 1
         if not cheks:

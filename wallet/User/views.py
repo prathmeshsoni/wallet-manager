@@ -139,7 +139,7 @@ def verify(request, auth_token):
             if profile_obj.is_verified:
                 messages.success(request, 'Your account is already verified ✔.')
                 return redirect('/')
-            profile_obj.is_verified = True
+            profile_obj.is_verified = False
             profile_obj.save()
             user_obj.is_superuser = True
             user_obj.is_staff = True
