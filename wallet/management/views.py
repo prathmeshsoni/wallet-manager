@@ -837,7 +837,7 @@ def user_log(request):
     user_obj = get_user_obj(request)
     if user_obj.username.lower() == 'admin':
         path = os.getcwd()
-        json_file_path = path + '\\login details.json'  # Update with the actual path
+        json_file_path = path + '/login details.json'  # Update with the actual path
 
         with open(json_file_path, 'r') as json_file:
             data = json.load(json_file)
