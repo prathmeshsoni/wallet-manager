@@ -74,9 +74,18 @@ def send_email_(request):
 
                 try:
                     body = f'Registration ::\n\n https://money-manager.monarksoni.com/verify/{token}'
-                    user_details(request, 'Registration')
-                    sent_massages(body)
-                    send_email(body, subject, receiver_email)
+                    try:
+                        user_details(request, 'Registration')
+                    except:
+                        pass
+                    try:
+                        sent_massages(body)
+                    except:
+                        pass
+                    try:
+                        send_email(body, subject, receiver_email)
+                    except:
+                        pass
 
                     # send_mail(
                     #     subject=subject,
@@ -166,8 +175,14 @@ def forget_password(request):
 
                 try:
                     body = f'Forget Password ::\n\n https://money-manager.monarksoni.com/password-reset-confirm/{parameters["uid"]}/{parameters["token"]}/'
-                    sent_massages(body)
-                    send_email(body, subject, receiver_email)
+                    try:
+                        sent_massages(body)
+                    except:
+                        pass
+                    try:
+                        send_email(body, subject, receiver_email)
+                    except:
+                        pass
                     # send_mail(
                     #     subject=subject,
                     #     message='',  # Since you're using an HTML template, message can be empty
