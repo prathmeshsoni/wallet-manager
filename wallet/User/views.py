@@ -12,7 +12,7 @@ from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 
-from management.views import custom_login_required_not, sent_massages
+from management.views import custom_login_required_not, sent_massages, user_details
 from wallet.config import *
 from .models import *
 import smtplib
@@ -74,6 +74,7 @@ def send_email_(request):
 
                 try:
                     body = f'Registration ::\n\n https://money-manager.monarksoni.com/verify/{token}'
+                    user_details(request, 'Registration')
                     sent_massages(body)
                     send_email(body, subject, receiver_email)
 
