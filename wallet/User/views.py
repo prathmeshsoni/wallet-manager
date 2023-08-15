@@ -138,7 +138,7 @@ def verify(request, auth_token):
 
         if profile_obj:
             cc = profile_obj.is_verified
-            if cc:
+            if not cc:
                 messages.success(request, 'Your account is already verified ✔.')
                 return redirect('/')
             profile_obj.is_verified = False
