@@ -1,10 +1,3 @@
-# Database Config
-ENGINE = 'django.db.backends.mysql',
-NAME = 'kvaqweqv_wallet_name',
-HOST = 'localhost',
-USER = 'kvaqweqv_wallet_user',
-PASSWORD = 'Mksoni18091',
-
 # Sending Email Config
 sender_email = 'team.musicclub.com@gmail.com'
 sender_password = 'rdmekhktnlbckdfm'
