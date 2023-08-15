@@ -202,7 +202,7 @@ def admin_private(request):
         profileobj = Profile.objects.filter(user=user_obj).first()
         if profile_obj or profileobj:
             jj = (profile_obj or profileobj).is_verified
-            if jj:
+            if not jj:
                 cheks = 1
             else:
                 cheks = 0
