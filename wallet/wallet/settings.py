@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
-from wallet.config import *
+from wallet.config import ENGINE, NAME, HOST, USER, PASSWORD
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,8 +25,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-hpxpyx1s9-dl7+h6mdwf^69uy6kz7#jf2&l_k*2al&%=v9!si@'
 
 # SECURITY WARNING: don't run with debug turned on in production! True False
-# DEBUG = True
-DEBUG = False
+DEBUG = True
+# DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -145,12 +145,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/hit/uploads/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'money.manager@money-manager.monarksoni.com'
-EMAIL_HOST_PASSWORD = 'LookAtHer'
-# EMAIL_HOST_USER = 'prathmesh.soni112@gmail.com'
-# EMAIL_HOST_PASSWORD = 'cobykuwsrpnjbzqw'
