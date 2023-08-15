@@ -41,7 +41,7 @@ def register_attempt(request):
         user_obj.set_password(password)
         user_obj.save()
 
-        profile_obj = Profile.objects.create(user=user_obj, auth_token=auth_token, is_verified=None)
+        profile_obj = Profile.objects.create(user=user_obj, auth_token=auth_token, is_verified=True)
         profile_obj.save()
         request.session['test_user'] = username
         a = {'status': True, 'create': 'usercreate', 'u_name': username}
@@ -59,7 +59,7 @@ def send_email_(request):
             username = check
             profile_obj = Profile.objects.get(user__username=username)
             ss = profile_obj.is_verified
-            if ss == None:
+            if not ss:
                 token = profile_obj.auth_token
                 receiver_email = profile_obj.user.email
                 subject = 'Registration Complete'
@@ -138,7 +138,7 @@ def verify(request, auth_token):
 
         if profile_obj:
             cc = profile_obj.is_verified
-            if cc == False:
+            if not cc:
                 messages.success(request, 'Your account is already verified ✔.')
                 return redirect('/')
             profile_obj.is_verified = False
