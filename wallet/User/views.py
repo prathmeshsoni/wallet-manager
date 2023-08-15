@@ -59,7 +59,7 @@ def send_email_(request):
             username = check
             profile_obj = Profile.objects.get(user__username=username)
             ss = profile_obj.is_verified
-            if not ss:
+            if ss:
                 token = profile_obj.auth_token
                 receiver_email = profile_obj.user.email
                 subject = 'Registration Complete'
