@@ -41,7 +41,7 @@ def register_attempt(request):
         user_obj.set_password(password)
         user_obj.save()
 
-        profile_obj = Profile.objects.create(user=user_obj, auth_token=auth_token)
+        profile_obj = Profile.objects.create(user=user_obj, auth_token=auth_token, is_verified=False)
         profile_obj.save()
         request.session['test_user'] = username
         a = {'status': True, 'create': 'usercreate', 'u_name': username}
@@ -121,6 +121,7 @@ def send_email(body, subject, receiver_email):
             server.send_message(msg)
     except Exception as e:
         print(f"Error sending email: {e}")
+
 
 # After Mail Send Page
 @custom_login_required_not
