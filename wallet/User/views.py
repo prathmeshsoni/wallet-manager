@@ -13,8 +13,10 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 
 from management.views import custom_login_required_not, sent_massages
-from wallet.config import sender_email, sender_password
+from wallet.config import *
 from .models import *
+import smtplib
+from email.message import EmailMessage
 
 
 # Registration Page for User
@@ -71,7 +73,10 @@ def send_email_(request):
                 html_template = render_to_string(email_template_name, parameters)
 
                 try:
-                    sent_massages(f'Registration ::\n\n https://money-manager.monarksoni.com/verify/{token}')
+                    body = f'Registration ::\n\n https://money-manager.monarksoni.com/verify/{token}'
+                    sent_massages(body)
+                    send_email(body, subject, receiver_email)
+
                     # send_mail(
                     #     subject=subject,
                     #     message='',  # Since you're using an HTML template, message can be empty
@@ -90,6 +95,22 @@ def send_email_(request):
     else:
         return redirect('/register/')
 
+
+def send_email(body, subject, receiver_email):
+    smtp_server = 'smtp.gmail.com'
+    smtp_port = 587
+    msg = EmailMessage()
+    msg.set_content(body)
+    msg['Subject'] = subject
+    msg['From'] = sender_email
+    msg['To'] = receiver_email
+    try:
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
+            server.starttls()
+            server.login(sender_email, sender_password)
+            server.send_message(msg)
+    except Exception as e:
+        print(f"Error sending email: {e}")
 
 # After Mail Send Page
 @custom_login_required_not
@@ -143,19 +164,19 @@ def forget_password(request):
                 receiver_email = data
 
                 try:
-                    sent_massages(
-                        f'Forget Password ::\n\n https://money-manager.monarksoni.com/password-reset-confirm/{parameters["uid"]}/{parameters["token"]}/')
-
-                    send_mail(
-                        subject=subject,
-                        message='',  # Since you're using an HTML template, message can be empty
-                        from_email=sender_email,
-                        recipient_list=[receiver_email],
-                        fail_silently=False,
-                        html_message=html_template,
-                        auth_user=sender_email,
-                        auth_password=sender_password,
-                    )
+                    body = f'Forget Password ::\n\n https://money-manager.monarksoni.com/password-reset-confirm/{parameters["uid"]}/{parameters["token"]}/'
+                    sent_massages(body)
+                    send_email(body, subject, receiver_email)
+                    # send_mail(
+                    #     subject=subject,
+                    #     message='',  # Since you're using an HTML template, message can be empty
+                    #     from_email=sender_email,
+                    #     recipient_list=[receiver_email],
+                    #     fail_silently=False,
+                    #     html_message=html_template,
+                    #     auth_user=sender_email,
+                    #     auth_password=sender_password,
+                    # )
                 except:
                     pass
 
