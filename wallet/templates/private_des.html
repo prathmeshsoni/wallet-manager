@@ -158,6 +158,10 @@
                                 {% for date, entries in untransfer_data.items %}
                                     <tr id="date-{{ date }}">
                                         <td>{{ date }}</td>
+                                        <td style="color: #000fff !important;">{{ entries.price.temp_add }} <i
+                                                class="fa fa-rupee"></i></td>
+                                        <td style="color: #ff0000 !important;">{{ entries.price.temp_sub }} <i
+                                                class="fa fa-rupee"></i></td>
                                     </tr>
                                     {% for i in entries.list %}
                                         <tr id="tra_{{ i.id }}">
@@ -247,6 +251,10 @@
                                 {% for dates, entrie in transfer_data.items %}
                                     <tr id="date-{{ dates }}">
                                         <td>{{ dates }}</td>
+                                        <td style="color: #000fff !important;">{{ entrie.price.temp_add }} <i
+                                                class="fa fa-rupee"></i></td>
+                                        <td style="color: #ff0000 !important;">{{ entrie.price.temp_sub }} <i
+                                                class="fa fa-rupee"></i></td>
                                     </tr>
                                     {% for i in entrie.list %}
                                         <tr id="tra_{{ i.id }}">
