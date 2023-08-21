@@ -155,7 +155,7 @@
                             <tbody>
 
                             {% for date, entries in untransfer_data.items %}
-                            <tr id="date-{{ date }}">
+                            <tr id="date-{{ date }}" style="background: #e4f3ff;" >
                                 <td>{{ date }}</td>
                                 {% if entries.price.temp_add == 0 %}
                                     <td></td>
@@ -169,6 +169,7 @@
                                     <td style="color: #ff0000 !important;">{{ entries.price.temp_sub }} <i
                                         class="fa fa-rupee"></i></td>
                                 {% endif %}
+                                <td colspan="4" ></td>
                             </tr>
                             {% for i in entries.list %}
                                 <tr id="tra_{{ i.id }}">
