@@ -163,7 +163,7 @@
                                     <td style="color: #000fff !important;">{{ entries.price.temp_add }} <i
                                             class="fa fa-rupee"></i></td>
                                 {% endif %}
-                                {% entries.price.temp_sub == 0 %}
+                                {% if entries.price.temp_sub == 0 %}
                                     <td></td>
                                 {% else %}
                                     <td style="color: #ff0000 !important;">{{ entries.price.temp_sub }} <i
