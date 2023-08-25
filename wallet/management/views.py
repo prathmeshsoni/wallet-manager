@@ -705,20 +705,20 @@ def view_all(request, other):
 # Available Balance Message
 @custom_login_required
 def check_balance(request):
-    user_obj = get_user_obj(request)
-    account_list = account_value(user_obj, '')
-
-    amount = 0
-    msg = '\n\n\n\nAvailable Balance : \n\n'
-    for item in account_list:
-        amount += item['amount']
-        msg += item['account_name'] + f' Rs: ' + str(item['amount']) + ' ₹ \n'
-
-    msg += f'\n\nTotal Balance Rs: {amount} ₹'
-    sent_massages(msg)
-    messages.success(request, msg)
+    # user_obj = get_user_obj(request)
+    # account_list = account_value(user_obj, '')
+    #
+    # amount = 0
+    # msg = '\n\n\n\nAvailable Balance : \n\n'
+    # for item in account_list:
+    #     amount += item['amount']
+    #     msg += item['account_name'] + f' Rs: ' + str(item['amount']) + ' ₹ \n'
+    #
+    # msg += f'\n\nTotal Balance Rs: {amount} ₹'
+    # sent_massages(msg)
+    # messages.success(request, msg)
     # return redirect('/view/')
-    return render(request, 'all_data.html')
+    return render(request, '404.html')
 
 
 # Transaction Detail Function
