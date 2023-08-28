@@ -24,6 +24,7 @@ from .forms import ManageForm
 from .models import ManageModel
 from .serializer import ManageSerialize, ManageSerialize_1
 
+from User.views import send_email
 
 # 404 Page Not Found
 def page_not_found_view(request, exception):
@@ -892,14 +893,24 @@ def convert_date(date_str):
 
 def sent_massages(msg):
     try:
-        client = Client(account_sid, auth_token)
-        message = client.messages.create(
-            body=msg,
-            from_=from_number,
-            to=to_number
-        )
+        # client = Client(account_sid, auth_token)
+        # message = client.messages.create(
+        #     body=msg,
+        #     from_=from_number,
+        #     to=to_number
+        # )
+        if 'Total Balance' in msg:
+            subject = 'Balance'
+        elif 'Dear UPI' in msg:
+            subject = 'Transaction Add'
+        elif 'Registration' in msg:
+            subject = 'User Registration'
+        else:
+            subject = 'Testing Mail'
+        send_email(msg, subject, receiver_email_)
     except:
         pass
+
 
 
 def account_value(user_obj, a_name):
